@@ -1,0 +1,32 @@
+<p>
+<button
+  type="button"
+  onClick={() => this.props.deleteRobot(this.props)}
+>
+  X
+</button>
+</p>
+
+export const deleteRobot = (id) => async (dispatch) => {
+    const { data } = await axios.delete(`/api/robots/${id}`);
+    dispatch(_deleteRobot(data));
+    history.push('/robots');
+  };
+
+  case DELETE_ROBOT:
+      return {
+        ...state,
+        robots: [...state.robots, action.robot],
+      };
+
+
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+      const robot = await Robot.findByPk(req.params.id);
+      await robot.destroy();
+      res.send(robot);
+    } catch (error) {
+      next(error);
+    }
+  });
